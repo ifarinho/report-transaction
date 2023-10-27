@@ -2,6 +2,7 @@ package transaction
 
 import (
 	"github.com/shopspring/decimal"
+	"report-transaction/internal/calculate"
 	"report-transaction/internal/db"
 	"strconv"
 	"time"
@@ -74,13 +75,17 @@ func CreateReports(transactions []Transaction) ([]Report, error) {
 			report.AddMonthCount(transaction.Date.Month())
 		}
 
-		if _, err := report.CalculateAverageCredit(); err != nil {
+		averageCredit, err := AverageBalance(report.Credit)
+		if err != nil {
 			return nil, err
 		}
+		report.AverageCredit = averageCredit
 
-		if _, err := report.CalculateAverageDebit(); err != nil {
+		averageDebit, err := AverageBalance(report.Debit)
+		if err != nil {
 			return nil, err
 		}
+		report.AverageDebit = averageDebit
 
 		reports = append(reports, report)
 	}
@@ -90,4 +95,8 @@ func CreateReports(transactions []Transaction) ([]Report, error) {
 
 func SaveInDatabase[T Transaction | Report](transactions []T) error {
 	return db.BatchInsert[T](transactions)
+}
+
+func AverageBalance(balance Balance) (decimal.Decimal, error) {
+	return calculate.DecimalDivision(balance.Value, decimal.NewFromInt(balance.Counter))
 }

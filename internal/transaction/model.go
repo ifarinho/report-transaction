@@ -3,7 +3,6 @@ package transaction
 import (
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
-	"report-transaction/internal/calculate"
 	"time"
 )
 
@@ -27,24 +26,6 @@ type Report struct {
 	Debit         Balance         `gorm:"-"`
 	Credit        Balance         `gorm:"-"`
 	MonthSummary  MonthSummary    `gorm:"-"`
-}
-
-func (r *Report) CalculateAverageDebit() (decimal.Decimal, error) {
-	res, err := calculate.DecimalDivision(r.Debit.Value, decimal.NewFromInt(r.Debit.Counter))
-	if err != nil {
-		return decimal.Decimal{}, err
-	}
-	r.AverageDebit = res
-	return r.AverageDebit, nil
-}
-
-func (r *Report) CalculateAverageCredit() (decimal.Decimal, error) {
-	res, err := calculate.DecimalDivision(r.Credit.Value, decimal.NewFromInt(r.Credit.Counter))
-	if err != nil {
-		return decimal.Decimal{}, err
-	}
-	r.AverageCredit = res
-	return r.AverageCredit, nil
 }
 
 func (r *Report) AddMonthCount(month time.Month) {
