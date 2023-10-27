@@ -18,21 +18,33 @@ type Transaction struct {
 
 type Report struct {
 	gorm.Model
-	UserId       uint            `gorm:"not null"`
-	TotalBalance decimal.Decimal `gorm:"type:decimal(7,6);not null"`
-	Debit        Balance         `gorm:"embedded;embeddedPrefix:debit_;not null"`
-	Credit       Balance         `gorm:"embedded;embeddedPrefix:credit_;not null"`
-	StartDate    time.Time       `gorm:"not null"`
-	EndDate      time.Time       `gorm:"not null"`
-	MonthSummary MonthSummary    `gorm:"-"`
+	UserId        uint            `gorm:"not null"`
+	TotalBalance  decimal.Decimal `gorm:"type:decimal(7,6);not null"`
+	AverageDebit  decimal.Decimal `gorm:"type:decimal(7,6);not null"`
+	AverageCredit decimal.Decimal `gorm:"type:decimal(7,6);not null"`
+	StartDate     time.Time       `gorm:"not null"`
+	EndDate       time.Time       `gorm:"not null"`
+	Debit         Balance         `gorm:"-"`
+	Credit        Balance         `gorm:"-"`
+	MonthSummary  MonthSummary    `gorm:"-"`
 }
 
-func (r *Report) AverageDebit() (decimal.Decimal, error) {
-	return calculate.DecimalDivision(r.Debit.Value, decimal.NewFromInt(r.Debit.Counter))
+func (r *Report) CalculateAverageDebit() (decimal.Decimal, error) {
+	res, err := calculate.DecimalDivision(r.Debit.Value, decimal.NewFromInt(r.Debit.Counter))
+	if err != nil {
+		return decimal.Decimal{}, err
+	}
+	r.AverageDebit = res
+	return r.AverageDebit, nil
 }
 
-func (r *Report) AverageCredit() (decimal.Decimal, error) {
-	return calculate.DecimalDivision(r.Credit.Value, decimal.NewFromInt(r.Credit.Counter))
+func (r *Report) CalculateAverageCredit() (decimal.Decimal, error) {
+	res, err := calculate.DecimalDivision(r.Credit.Value, decimal.NewFromInt(r.Credit.Counter))
+	if err != nil {
+		return decimal.Decimal{}, err
+	}
+	r.AverageCredit = res
+	return r.AverageCredit, nil
 }
 
 func (r *Report) AddMonthCount(month time.Month) {
@@ -40,8 +52,8 @@ func (r *Report) AddMonthCount(month time.Month) {
 }
 
 type Balance struct {
-	Value   decimal.Decimal `gorm:"type:decimal(7,6);not null"`
-	Counter int64           `gorm:"-"`
+	Value   decimal.Decimal
+	Counter int64
 }
 
 func (b *Balance) Add(value decimal.Decimal) {

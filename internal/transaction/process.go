@@ -72,9 +72,17 @@ func CreateReports(transactions []Transaction) ([]Report, error) {
 			}
 
 			report.AddMonthCount(transaction.Date.Month())
-
-			reports = append(reports, report)
 		}
+
+		if _, err := report.CalculateAverageCredit(); err != nil {
+			return nil, err
+		}
+
+		if _, err := report.CalculateAverageDebit(); err != nil {
+			return nil, err
+		}
+
+		reports = append(reports, report)
 	}
 
 	return reports, nil
