@@ -20,23 +20,27 @@ func main() {
 		panic(err)
 	}
 
-	// 3. generate report from csv file content
+	// 3. generate reports from csv file content
 	reports, err := transaction.CreateReports(fileContent)
 	if err != nil {
 		panic(err)
 	}
 
-	// 4. generate new csv files from reports
+	// 4. for each report
 
-	// 5. upload csv files to s3 bucket
+	// a. generate new csv file from report
 
-	// 6. save to postgres with some s3 reference
+	// b. upload csv file to s3 bucket
+
+	// c. add some s3 reference to report
+
+	// d. generate email template
+
+	// e. send email to customer with amazon ses
+
+	// 5. save reports data to postgres with some s3 reference
 	err = transaction.SaveInDatabase[transaction.Report](reports)
 	if err != nil {
 		panic(err)
 	}
-
-	// 7. generate email template
-
-	// 8. send email with amazon ses
 }

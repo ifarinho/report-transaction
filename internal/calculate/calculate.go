@@ -13,3 +13,7 @@ func DecimalDivision(dividend decimal.Decimal, divisor decimal.Decimal) (decimal
 	}
 	return dividend.Div(divisor), nil
 }
+
+func DecimalFromInt(i int64) decimal.Decimal {
+	return decimal.NewFromInt(i)
+}
