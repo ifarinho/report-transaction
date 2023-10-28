@@ -1,46 +1,50 @@
 package main
 
 import (
+	"fmt"
+	"report-transaction/internal/db"
 	"report-transaction/internal/env"
 	"report-transaction/internal/file"
+	"report-transaction/internal/notification"
 	"report-transaction/internal/transaction"
 )
 
 func main() {
 
-	// 1. read csv file
-	fileContent, err := file.CsvReader[transaction.Transaction](env.FileTargetPath, true, transaction.RowParser)
+}
+
+func handler(key string, accountId int) error {
+	bucketKey := fmt.Sprintf("%s/%s", env.AwsFullPath, key)
+
+	// 1. select account
+	account, err := transaction.SelectAccountById(accountId)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	// 2. insert in postgres the file content as transactions
-	err = transaction.SaveInDatabase[transaction.Transaction](fileContent)
+	// 2. read csv file
+	fileContent, err := file.CsvReader(bucketKey, transaction.GetFileFromBucket, transaction.RowParser)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	// 3. generate reports from csv file content
-	reports, err := transaction.CreateReports(fileContent)
+	// 3. insert in postgres the file content as transactions
+	err = db.BatchInsert(fileContent)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	// 4. for each report
-
-	// a. generate new csv file from report
-
-	// b. upload csv file to s3 bucket
-
-	// c. add some s3 reference to report
-
-	// d. generate email template
-
-	// e. send email to customer with amazon ses
-
-	// 5. save reports data to postgres with some s3 reference
-	err = transaction.SaveInDatabase[transaction.Report](reports)
+	// 4. generate report from csv file content
+	report, err := transaction.CreateReport(fileContent)
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	// 5. send email
+	err = notification.SendEmail(report, account)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

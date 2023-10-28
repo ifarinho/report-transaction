@@ -1,14 +1,12 @@
 package awsdk
 
 import (
-	"bytes"
-	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/ses"
-	"net/http"
+	"io"
 	"report-transaction/internal/env"
 )
 
@@ -40,19 +38,16 @@ func Init() error {
 	return nil
 }
 
-func PutObject(content []byte, key string) error {
-	_, err := s3Client.PutObject(&s3.PutObjectInput{
-		Bucket:               aws.String(env.AwsS3Bucket),
-		Key:                  aws.String(fmt.Sprintf("%s/%s", env.AwsFullPath, key)),
-		ACL:                  aws.String("private"),
-		Body:                 bytes.NewReader(content),
-		ContentLength:        aws.Int64(int64(len(content))),
-		ContentType:          aws.String(http.DetectContentType(content)),
-		ContentDisposition:   aws.String("attachment"),
-		ServerSideEncryption: aws.String("AES256"),
+func GetObject(key string) ([]byte, error) {
+	result, err := s3Client.GetObject(&s3.GetObjectInput{
+		Bucket: aws.String(env.AwsS3Bucket),
+		Key:    aws.String(key),
 	})
+	if err != nil {
+		return nil, err
+	}
 
-	return err
+	return io.ReadAll(result.Body)
 }
 
 func SendEmail(content []byte, destinations []string) error {

@@ -1,22 +1,29 @@
 package transaction
 
 import (
-	"github.com/shopspring/decimal"
+	"bytes"
+	"encoding/csv"
+	"report-transaction/internal/awsdk"
+	"report-transaction/internal/calculate"
 	"report-transaction/internal/datetime"
-	"strconv"
+	"report-transaction/internal/env"
 	"time"
 )
 
-const csvExtension = "csv"
-
 const (
-	userIdRow int = iota
+	transactionIdRow int = iota
+	accountIdRow
 	dateRow
 	amountRow
 )
 
 func RowParser(record []string) (*Transaction, error) {
-	id, err := strconv.ParseUint(record[userIdRow], 0, 10)
+	transactionId, err := calculate.ParseUint(record[transactionIdRow])
+	if err != nil {
+		return nil, err
+	}
+
+	accountId, err := calculate.ParseUint(record[accountIdRow])
 	if err != nil {
 		return nil, err
 	}
@@ -26,18 +33,23 @@ func RowParser(record []string) (*Transaction, error) {
 		return nil, err
 	}
 
-	amount, err := decimal.NewFromString(record[amountRow])
+	amount, err := calculate.ParseDecimal(record[amountRow])
 	if err != nil {
 		return nil, err
 	}
 
 	return &Transaction{
-		CustomerId: uint(id),
-		Date:       datetime.TimeInUtc(date),
-		Amount:     amount,
+		TransactionId: transactionId,
+		AccountId:     accountId,
+		Date:          datetime.TimeInUtc(date),
+		Amount:        amount,
 	}, nil
 }
 
-func RowWriter(report Report) ([]string, error) {
-	return nil, nil
+func GetFileFromBucket(key string) (*csv.Reader, error) {
+	content, err := awsdk.GetObject(env.AwsFullPath + key)
+	if err != nil {
+		return nil, err
+	}
+	return csv.NewReader(bytes.NewBuffer(content)), nil
 }

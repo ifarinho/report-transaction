@@ -3,8 +3,8 @@ package env
 import "os"
 
 var (
-	PostgresDataSourceName = os.Getenv("DB_POSTGRES_DATA_SOURCE_NAME")
 	FileTargetPath         = os.Getenv("TARGET_FULL_PATH")
+	PostgresDataSourceName = os.Getenv("DB_POSTGRES_DATA_SOURCE_NAME")
 	AwsRegion              = os.Getenv("AWS_REGION")
 	AwsAccessKeyId         = os.Getenv("AWS_ACCESS_KEY_ID")
 	AwsSecretAccessKey     = os.Getenv("AWS_ACCESS_SECRET_KEY")
