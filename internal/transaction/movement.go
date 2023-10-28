@@ -29,17 +29,17 @@ func (m *Movement) UpdateBalance(value decimal.Decimal) {
 }
 
 func (m *Movement) AverageDebit() (decimal.Decimal, error) {
-	return AverageBalance(m.Debit)
+	return averageBalance(m.Debit)
 }
 
 func (m *Movement) AverageCredit() (decimal.Decimal, error) {
-	return AverageBalance(m.Credit)
+	return averageBalance(m.Credit)
 }
 
 func (m *Movement) Transactions() int64 {
 	return m.Debit.Counter + m.Credit.Counter
 }
 
-func AverageBalance(balance Balance) (decimal.Decimal, error) {
+func averageBalance(balance Balance) (decimal.Decimal, error) {
 	return calculate.DecimalDivision(balance.Value, calculate.DecimalFromInt(balance.Counter))
 }

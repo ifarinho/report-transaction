@@ -32,7 +32,7 @@ func (r *Report) AverageTotalDebit() (decimal.Decimal, error) {
 		balance.Update(movement.Debit.Value)
 	}
 
-	return AverageBalance(balance)
+	return averageBalance(balance)
 }
 
 func (r *Report) AverageTotalCredit() (decimal.Decimal, error) {
@@ -42,7 +42,7 @@ func (r *Report) AverageTotalCredit() (decimal.Decimal, error) {
 		balance.Update(movement.Credit.Value)
 	}
 
-	return AverageBalance(balance)
+	return averageBalance(balance)
 }
 
 func NewReport() *Report {

@@ -27,7 +27,36 @@ type MonthSummary struct {
 	Transactions  string
 }
 
-func NewEmailContent(report *transaction.Report) (*EmailContent, error) {
+func SendEmail(report *transaction.Report, account *transaction.Account) error {
+	templateContent, err := emailContent(report)
+	if err != nil {
+		return err
+	}
+
+	body, err := createTemplate(templateContent)
+	if err != nil {
+		return err
+	}
+
+	return awsdk.SendEmail(body, emailSubject, account.EmailForSes())
+}
+
+func createTemplate(content *EmailContent) (string, error) {
+	emailTemplate, err := template.ParseFiles(emailTemplatePath)
+	if err != nil {
+		return "", err
+	}
+
+	buffer := &bytes.Buffer{}
+
+	if err = emailTemplate.Execute(buffer, content); err != nil {
+		return "nil", err
+	}
+
+	return buffer.String(), nil
+}
+
+func emailContent(report *transaction.Report) (*EmailContent, error) {
 	var monthSummary []MonthSummary
 
 	averageTotalDebit, err := report.AverageTotalDebit()
@@ -65,33 +94,4 @@ func NewEmailContent(report *transaction.Report) (*EmailContent, error) {
 		AverageTotalCredit: averageTotalCredit.String(),
 		MonthSummary:       monthSummary,
 	}, nil
-}
-
-func SendEmail(report *transaction.Report, account *transaction.Account) error {
-	templateContent, err := NewEmailContent(report)
-	if err != nil {
-		return err
-	}
-
-	body, err := CreateTemplate(templateContent)
-	if err != nil {
-		return err
-	}
-
-	return awsdk.SendEmail(body, emailSubject, account.EmailForSes())
-}
-
-func CreateTemplate(content *EmailContent) (string, error) {
-	emailTemplate, err := template.ParseFiles(emailTemplatePath)
-	if err != nil {
-		return "", err
-	}
-
-	buffer := &bytes.Buffer{}
-
-	if err = emailTemplate.Execute(buffer, content); err != nil {
-		return "nil", err
-	}
-
-	return buffer.String(), nil
 }
