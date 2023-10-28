@@ -1,11 +1,18 @@
 package notification
 
-import "report-transaction/internal/transaction"
+import (
+	"report-transaction/internal/awsdk"
+	"report-transaction/internal/transaction"
+)
 
 func SendEmail(report *transaction.Report, account *transaction.Account) error {
-	return nil
+	template, err := CreateTemplate(report)
+	if err != nil {
+		return err
+	}
+	return awsdk.SendEmail(template, account.EmailForSes())
 }
 
-func CreateTemplate() ([]byte, error) {
+func CreateTemplate(report *transaction.Report) ([]byte, error) {
 	return nil, nil
 }

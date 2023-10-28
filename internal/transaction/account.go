@@ -10,6 +10,10 @@ type Account struct {
 	Email string `gorm:"not null"`
 }
 
+func (a *Account) EmailForSes() []string {
+	return []string{a.Email}
+}
+
 func SelectAccountById(id int) (*Account, error) {
 	return db.SelectById[Account](id)
 }
