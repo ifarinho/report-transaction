@@ -12,18 +12,12 @@ import (
 
 const (
 	transactionIdRow int = iota
-	accountIdRow
 	dateRow
 	amountRow
 )
 
 func RowParser(record []string) (*Transaction, error) {
 	transactionId, err := calculate.ParseUint(record[transactionIdRow])
-	if err != nil {
-		return nil, err
-	}
-
-	accountId, err := calculate.ParseUint(record[accountIdRow])
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +34,6 @@ func RowParser(record []string) (*Transaction, error) {
 
 	return &Transaction{
 		TransactionId: transactionId,
-		AccountId:     accountId,
 		Date:          datetime.TimeInUtc(date),
 		Amount:        amount,
 	}, nil

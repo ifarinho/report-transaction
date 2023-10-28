@@ -8,8 +8,8 @@ import (
 
 type Transaction struct {
 	gorm.Model
-	TransactionId uint64          `gorm:"not null"`
-	AccountId     uint64          `gorm:"not null"`
+	TransactionId uint            `gorm:"not null"`
+	AccountId     uint            `gorm:"not null"`
 	Date          time.Time       `gorm:"not null"`
 	Amount        decimal.Decimal `gorm:"type:decimal(7,6);not null"`
 }

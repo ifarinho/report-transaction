@@ -23,6 +23,7 @@ func ParseDecimal(s string) (decimal.Decimal, error) {
 	return decimal.NewFromString(s)
 }
 
-func ParseUint(s string) (uint64, error) {
-	return strconv.ParseUint(s, 0, 10)
+func ParseUint(s string) (uint, error) {
+	i, err := strconv.ParseUint(s, 0, 10)
+	return uint(i), err
 }
