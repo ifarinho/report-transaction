@@ -10,6 +10,8 @@ import (
 	"report-transaction/internal/env"
 )
 
+const charSet = "UTF-8"
+
 var (
 	awsSession *session.Session
 	s3Client   *s3.S3
@@ -50,14 +52,37 @@ func GetObject(key string) ([]byte, error) {
 	return io.ReadAll(result.Body)
 }
 
-func SendEmail(content []byte, destinations []string) error {
-	_, err := sesClient.SendRawEmail(&ses.SendRawEmailInput{
-		RawMessage: &ses.RawMessage{
-			Data: content,
+func SendEmail(body string, subject string, recipients []string) error {
+	_, err := sesClient.SendEmail(&ses.SendEmailInput{
+		Destination: &ses.Destination{
+			ToAddresses: toAddresses(recipients),
 		},
-		Destinations: aws.StringSlice(destinations),
-		Source:       aws.String(env.ServiceEmail),
+		Message: &ses.Message{
+			Body: &ses.Body{
+				Html: &ses.Content{
+					Charset: aws.String(charSet),
+					Data:    aws.String(body),
+				},
+				Text: &ses.Content{
+					Charset: aws.String(charSet),
+					Data:    aws.String(body),
+				},
+			},
+			Subject: &ses.Content{
+				Charset: aws.String(charSet),
+				Data:    aws.String(subject),
+			},
+		},
+		Source: aws.String(env.ServiceEmail),
 	})
 
 	return err
+}
+
+func toAddresses(recipients []string) []*string {
+	var addresses []*string
+	for _, recipient := range recipients {
+		addresses = append(addresses, aws.String(recipient))
+	}
+	return addresses
 }

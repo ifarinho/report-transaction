@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+<main>
+    <h2>Account Report Summary</h2>
+    <div>
+        <p>Total balance: {{ .TotalBalance }}</p>
+        <p>Average debit amount: {{ .AverageTotalDebit }}</p>
+        <p>Average credit amount: {{ .AverageTotalCredit }}</p>
+    </div>
+    {{ range .MonthSummary }}
+        <div>
+            <p>{{ .Month }}</p>
+            <p>Average debit: {{ .AverageDebit }}</p>
+            <p>Average credit: {{ .AverageCredit }}</p>
+            <p>Number of transactions: {{ .Transactions }}</p>
+        </div>
+    {{ end }}
+</main>
+</body>
+</html>

@@ -25,6 +25,26 @@ func (r *Report) AddTotalBalance(amount decimal.Decimal) {
 	r.TotalBalance.Add(amount)
 }
 
+func (r *Report) AverageTotalDebit() (decimal.Decimal, error) {
+	balance := Balance{}
+
+	for _, movement := range r.MonthSummary {
+		balance.Update(movement.Debit.Value)
+	}
+
+	return AverageBalance(balance)
+}
+
+func (r *Report) AverageTotalCredit() (decimal.Decimal, error) {
+	balance := Balance{}
+
+	for _, movement := range r.MonthSummary {
+		balance.Update(movement.Credit.Value)
+	}
+
+	return AverageBalance(balance)
+}
+
 func NewReport() *Report {
 	return &Report{
 		TotalBalance: decimal.Decimal{},
