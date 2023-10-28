@@ -11,4 +11,5 @@ var (
 	AwsCredentialToken     = os.Getenv("AWS_CREDENTIAL_TOKEN")
 	AwsS3Bucket            = os.Getenv("AWS_S3_BUCKET")
 	AwsFullPath            = os.Getenv("AWS_FULL_PATH")
+	ServiceEmail           = os.Getenv("SERVICE_EMAIL")
 )

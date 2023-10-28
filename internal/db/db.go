@@ -3,7 +3,6 @@ package db
 import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 	"report-transaction/internal/env"
 )
 
@@ -13,19 +12,20 @@ func DB() *gorm.DB {
 	return db
 }
 
-func Init() *gorm.DB {
+func Init() error {
 	var err error
 
 	db, err = gorm.Open(postgres.Open(env.PostgresDataSourceName), &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
-		log.Fatalf("fatal: failed to open postgres connection: %v", err)
+		return err
 	}
 
-	if err = db.AutoMigrate(); err != nil {
-		log.Fatalf("fatal: failed to run migrations: %v", err)
+	err = db.AutoMigrate()
+	if err != nil {
+		return err
 	}
 
-	return db
+	return nil
 }
