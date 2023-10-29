@@ -9,12 +9,12 @@ func Cli() {
 	bucketKey := *args.BucketKey
 	accountId := *args.AccountId
 
-	if err := validateArgument(bucketKey, "bucket key"); err != nil {
+	if err := validateArgument(bucketKey, "bucket-key"); err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	if err := validateArgument(accountId, "account id"); err != nil {
+	if err := validateArgument(accountId, "account-id"); err != nil {
 		fmt.Println(err.Error())
 		return
 	}
