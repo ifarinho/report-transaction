@@ -2,6 +2,7 @@ package notification
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"report-transaction/internal/app/awsdk"
 	"report-transaction/internal/app/tools/stringify"
@@ -32,6 +33,8 @@ func SendEmail(report *transaction.Report, account *transaction.Account) error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println(templateContent)
 
 	body, err := createTemplate(templateContent)
 	if err != nil {

@@ -11,8 +11,12 @@ type Balance struct {
 }
 
 func (b *Balance) Update(value decimal.Decimal) {
-	b.Value.Add(value)
+	b.Value = b.Value.Add(value)
 	b.Counter++
+}
+
+func (b *Balance) IsZero() bool {
+	return b.Value.IsZero()
 }
 
 type Movement struct {
@@ -29,10 +33,16 @@ func (m *Movement) UpdateBalance(value decimal.Decimal) {
 }
 
 func (m *Movement) AverageDebit() (decimal.Decimal, error) {
+	if m.Debit.IsZero() {
+		return decimal.Decimal{}, nil
+	}
 	return averageBalance(m.Debit)
 }
 
 func (m *Movement) AverageCredit() (decimal.Decimal, error) {
+	if m.Credit.IsZero() {
+		return decimal.Decimal{}, nil
+	}
 	return averageBalance(m.Credit)
 }
 

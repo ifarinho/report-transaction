@@ -10,7 +10,7 @@ type Report struct {
 	MonthSummary map[time.Month]Movement
 }
 
-func (r *Report) AddMonthSummary(transaction *Transaction) {
+func (r *Report) AddMonthSummary(transaction Transaction) {
 	if movement, ok := r.MonthSummary[transaction.Month()]; ok {
 		movement.UpdateBalance(transaction.Amount)
 		return
@@ -22,7 +22,7 @@ func (r *Report) AddMonthSummary(transaction *Transaction) {
 }
 
 func (r *Report) AddTotalBalance(amount decimal.Decimal) {
-	r.TotalBalance.Add(amount)
+	r.TotalBalance = r.TotalBalance.Add(amount)
 }
 
 func (r *Report) AverageTotalDebit() (decimal.Decimal, error) {
@@ -57,7 +57,7 @@ func CreateReport(transactions []Transaction) (*Report, error) {
 
 	for _, transaction := range transactions {
 		report.AddTotalBalance(transaction.Amount)
-		report.AddMonthSummary(&transaction)
+		report.AddMonthSummary(transaction)
 	}
 
 	return report, nil
