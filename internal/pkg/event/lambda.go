@@ -5,7 +5,6 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"net/http"
-	"report-transaction/internal/app/tools/decode"
 )
 
 type Request struct {
@@ -18,16 +17,9 @@ func LambdaStart() {
 }
 
 func HandleRequest(_ context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	request, err := decode.DeserializeJson[Request]([]byte(event.Body))
-	if err != nil {
-		return response(http.StatusBadRequest, err)
-	}
-
-	err = handler(request.Key, request.AccountId)
-	if err != nil {
+	if err := handler(event.Body); err != nil {
 		return response(http.StatusInternalServerError, err)
 	}
-
 	return response(http.StatusOK, nil)
 }
 
