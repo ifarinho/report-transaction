@@ -1,6 +1,7 @@
 package awsdk
 
 import (
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -30,7 +31,7 @@ func Init() error {
 		),
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("failed aws session creation: %v", err)
 	}
 
 	s3Client = s3.New(awsSession)

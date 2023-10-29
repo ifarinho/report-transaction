@@ -1,14 +1,26 @@
 package env
 
-import "os"
+import (
+	"log"
+	"os"
+)
 
 var (
-	PostgresDataSourceName = os.Getenv("DB_POSTGRES_DATA_SOURCE_NAME")
-	AwsRegion              = os.Getenv("AWS_REGION")
-	AwsAccessKeyId         = os.Getenv("AWS_ACCESS_KEY_ID")
-	AwsSecretAccessKey     = os.Getenv("AWS_ACCESS_SECRET_KEY")
-	AwsCredentialToken     = os.Getenv("AWS_CREDENTIAL_TOKEN")
-	AwsS3Bucket            = os.Getenv("AWS_S3_BUCKET")
-	AwsFullPath            = os.Getenv("AWS_FULL_PATH")
-	ServiceEmail           = os.Getenv("SERVICE_EMAIL")
+	PostgresDataSourceName = getOrFail("DB_POSTGRES_DATA_SOURCE_NAME")
+	AwsRegion              = getOrFail("AWS_REGION")
+	AwsAccessKeyId         = getOrFail("AWS_ACCESS_KEY_ID")
+	AwsSecretAccessKey     = getOrFail("AWS_ACCESS_SECRET_KEY")
+	AwsCredentialToken     = getOrFail("AWS_CREDENTIAL_TOKEN")
+	AwsS3Bucket            = getOrFail("AWS_S3_BUCKET")
+	AwsFullPath            = getOrFail("AWS_FULL_PATH")
+	ServiceEmail           = getOrFail("SERVICE_EMAIL")
+	CorsOrigin             = getOrFail("CORS_ORIGIN")
 )
+
+func getOrFail(key string) string {
+	v := os.Getenv(key)
+	if v == "" {
+		log.Fatalf("fatal: empty value for env variable: %v", v)
+	}
+	return v
+}

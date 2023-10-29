@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"report-transaction/internal/app/env"
@@ -20,12 +21,12 @@ func Init() error {
 		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("failed postgres database connection: %v", err)
 	}
 
 	err = db.AutoMigrate(transaction.Transaction{}, transaction.Account{})
 	if err != nil {
-		return err
+		return fmt.Errorf("failed postgres migration: %v", err)
 	}
 
 	return nil

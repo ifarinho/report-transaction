@@ -5,21 +5,30 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"net/http"
+	"report-transaction/internal/app/env"
+	"report-transaction/internal/app/tools/decode"
 )
 
 type Request struct {
-	Key       string `json:"key"`
+	BucketKey string `json:"bucket_key"`
 	AccountId uint   `json:"account_id"`
 }
 
-func LambdaStart() {
+func Lambda() {
 	lambda.Start(HandleRequest)
 }
 
 func HandleRequest(_ context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	if err := handler(event.Body); err != nil {
+	request, err := decode.DeserializeJsonString[Request](event.Body)
+	if err != nil {
+		return response(http.StatusBadRequest, err)
+	}
+
+	err = handler(request.BucketKey, request.AccountId)
+	if err != nil {
 		return response(http.StatusInternalServerError, err)
 	}
+
 	return response(http.StatusOK, nil)
 }
 
@@ -35,7 +44,7 @@ func response(statusCode int, err error) (events.APIGatewayProxyResponse, error)
 		Body:       body,
 		Headers: map[string]string{
 			"Content-Type":                     "application/json",
-			"Access-Control-Allow-Origin":      "*",
+			"Access-Control-Allow-Origin":      env.CorsOrigin,
 			"Access-Control-Allow-Headers":     "Content-Type",
 			"Access-Control-Allow-Methods":     "POST",
 			"Access-Control-Allow-Credentials": "true",
