@@ -1,12 +1,12 @@
 #!/usr/bin/env make
 
 DOCKER_IMAGE=report-transaction
+TEMPLATE_ENV=template.env
 
-.PHONY: build
+.PHONY: env
 build:
-	@cp template.env .env
-	@docker build -t $(DOCKER_IMAGE):latest .
+	@if [ ! -f $(CURDIR)/.env ]; then cp -f $(CURDIR)/$(TEMPLATE_ENV) $(CURDIR)/.env; fi
 
 .PHONY: run
 run:
-	@docker-compose up -d
+	@docker-compose --env-file .env  up -d

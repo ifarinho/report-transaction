@@ -38,3 +38,6 @@ certs/*
 
 # Environment
 .env
+
+# Local
+local/postgres/data
