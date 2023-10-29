@@ -27,7 +27,7 @@ func Cli() {
 
 func validateArgument[T comparable](argument T, description string) error {
 	if argument == *new(T) {
-		return fmt.Errorf("argument error: got empty value for %s: %v", description, argument)
+		return fmt.Errorf("argument error: got empty value for %s", description)
 	}
 	return nil
 }

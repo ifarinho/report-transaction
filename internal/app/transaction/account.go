@@ -6,7 +6,9 @@ import (
 
 type Account struct {
 	gorm.Model
-	Email string `gorm:"not null"`
+	Name    string `gorm:"not null"`
+	Surname string `gorm:"not null"`
+	Email   string `gorm:"not null"`
 }
 
 func (a *Account) EmailForSes() []string {

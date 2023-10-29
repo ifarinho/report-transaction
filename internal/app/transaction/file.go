@@ -23,7 +23,7 @@ func RowParser(record []string) (*Transaction, error) {
 		return nil, err
 	}
 
-	date, err := time.Parse(time.RFC3339, record[dateRow])
+	date, err := time.Parse(time.DateOnly, record[dateRow])
 	if err != nil {
 		return nil, err
 	}
@@ -49,5 +49,5 @@ func GetFileFromBucket(key string) (*csv.Reader, error) {
 }
 
 func FileFullPath(key string, accountId uint) string {
-	return fmt.Sprintf("%s/%s/%d/%s", env.AwsS3Bucket, env.AwsS3Prefix, accountId, key)
+	return fmt.Sprintf("%s/%d/%s", env.AwsS3Prefix, accountId, key)
 }

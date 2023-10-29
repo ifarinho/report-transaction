@@ -11,7 +11,7 @@ type Transaction struct {
 	TransactionId uint            `gorm:"not null"`
 	AccountId     uint            `gorm:"not null"`
 	Date          time.Time       `gorm:"not null"`
-	Amount        decimal.Decimal `gorm:"type:decimal(7,6);not null"`
+	Amount        decimal.Decimal `gorm:"not null" sql:"type:decimal(20,8);"`
 }
 
 func (t *Transaction) Month() time.Month {

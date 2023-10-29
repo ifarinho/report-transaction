@@ -6,21 +6,25 @@ import (
 )
 
 var (
-	PostgresDataSourceName = getOrFail("DB_POSTGRES_DATA_SOURCE_NAME")
-	AwsRegion              = getOrFail("AWS_REGION")
-	AwsAccessKeyId         = getOrFail("AWS_ACCESS_KEY_ID")
-	AwsSecretAccessKey     = getOrFail("AWS_ACCESS_SECRET_KEY")
-	AwsCredentialToken     = getOrFail("AWS_CREDENTIAL_TOKEN")
-	AwsS3Bucket            = getOrFail("AWS_S3_BUCKET")
-	AwsS3Prefix            = getOrFail("AWS_S3_PREFIX")
-	ServiceEmail           = getOrFail("SERVICE_EMAIL")
-	CorsOrigin             = getOrFail("CORS_ORIGIN")
+	AwsCredentialToken     = getEnv("AWS_CREDENTIAL_TOKEN")
+	AwsAccessKeyId         = getEnvOrFail("AWS_ACCESS_KEY_ID")
+	AwsSecretAccessKey     = getEnvOrFail("AWS_ACCESS_SECRET_KEY")
+	AwsRegion              = getEnvOrFail("AWS_REGION")
+	AwsS3Bucket            = getEnvOrFail("AWS_S3_BUCKET")
+	AwsS3Prefix            = getEnvOrFail("AWS_S3_PREFIX")
+	PostgresDataSourceName = getEnvOrFail("DB_POSTGRES_DATA_SOURCE_NAME")
+	ServiceEmail           = getEnvOrFail("SERVICE_EMAIL")
+	CorsOrigin             = getEnv("CORS_ORIGIN")
 )
 
-func getOrFail(key string) string {
-	v := os.Getenv(key)
+func getEnvOrFail(key string) string {
+	v := getEnv(key)
 	if v == "" {
-		log.Fatalf("fatal: empty value for env variable: %v", v)
+		log.Fatalf("fatal: empty value for env variable: %v", key)
 	}
 	return v
+}
+
+func getEnv(key string) string {
+	return os.Getenv(key)
 }

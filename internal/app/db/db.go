@@ -19,6 +19,7 @@ func Init() error {
 
 	db, err = gorm.Open(postgres.Open(env.PostgresDataSourceName), &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
+		CreateBatchSize:                          1000,
 	})
 	if err != nil {
 		return fmt.Errorf("failed postgres database connection: %v", err)

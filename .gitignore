@@ -40,4 +40,4 @@ certs/*
 .env
 
 # Local
-local/postgres/data
+txns.csv

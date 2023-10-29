@@ -4,9 +4,13 @@ DOCKER_IMAGE=report-transaction
 TEMPLATE_ENV=template.env
 
 .PHONY: env
-build:
+env:
 	@if [ ! -f $(CURDIR)/.env ]; then cp -f $(CURDIR)/$(TEMPLATE_ENV) $(CURDIR)/.env; fi
 
-.PHONY: run
-run:
-	@docker-compose --env-file .env  up -d
+.PHONY: db
+db:
+	@docker run --name some-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -p 5432:5432 -d postgres
+
+.PHONY: build-local
+build-local:
+	@docker

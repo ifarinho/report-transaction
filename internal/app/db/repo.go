@@ -1,7 +1,7 @@
 package db
 
 func BatchInsert(records any) error {
-	res := DB().Create(&records)
+	res := DB().Create(records)
 	return res.Error
 }
 
