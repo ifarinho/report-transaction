@@ -10,4 +10,4 @@ RUN go mod download
 
 COPY *.go ./
 
-RUN CGO_ENABLED=0 GOOS=linux go build cmd/app -o /app
+RUN CGO_ENABLED=0 GOOS=linux go build.sh cmd/app -o /report-transaction
