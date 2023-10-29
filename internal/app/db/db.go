@@ -4,6 +4,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"report-transaction/internal/app/env"
+	"report-transaction/internal/app/transaction"
 )
 
 var db *gorm.DB
@@ -22,7 +23,7 @@ func Init() error {
 		return err
 	}
 
-	err = db.AutoMigrate()
+	err = db.AutoMigrate(transaction.Transaction{}, transaction.Account{})
 	if err != nil {
 		return err
 	}

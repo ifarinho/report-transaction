@@ -13,7 +13,7 @@ func handler(key string, accountId uint) error {
 	bucketKey := fmt.Sprintf("%s/%s", env.AwsFullPath, key)
 
 	// 1. select account
-	account, err := transaction.SelectAccountById(accountId)
+	account, err := db.SelectById[transaction.Account](accountId)
 	if err != nil {
 		return err
 	}
