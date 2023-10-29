@@ -5,7 +5,7 @@ func BatchInsert(records any) error {
 	return res.Error
 }
 
-func SelectById[T any](id int) (*T, error) {
+func SelectById[T any](id uint) (*T, error) {
 	result := new(T)
 	res := DB().Where("id = ?", id).First(&result)
 	return result, res.Error

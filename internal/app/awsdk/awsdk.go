@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/ses"
 	"io"
-	"report-transaction/internal/env"
+	"report-transaction/internal/app/env"
 )
 
 const charSet = "UTF-8"

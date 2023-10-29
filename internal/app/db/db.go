@@ -3,7 +3,7 @@ package db
 import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"report-transaction/internal/env"
+	"report-transaction/internal/app/env"
 )
 
 var db *gorm.DB

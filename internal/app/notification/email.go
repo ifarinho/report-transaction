@@ -3,9 +3,9 @@ package notification
 import (
 	"bytes"
 	"html/template"
-	"report-transaction/internal/awsdk"
-	"report-transaction/internal/stringify"
-	"report-transaction/internal/transaction"
+	"report-transaction/internal/app/awsdk"
+	"report-transaction/internal/app/tools/stringify"
+	transaction2 "report-transaction/internal/app/transaction"
 )
 
 const (
@@ -27,7 +27,7 @@ type MonthSummary struct {
 	Transactions  string
 }
 
-func SendEmail(report *transaction.Report, account *transaction.Account) error {
+func SendEmail(report *transaction2.Report, account *transaction2.Account) error {
 	templateContent, err := emailContent(report)
 	if err != nil {
 		return err
@@ -56,7 +56,7 @@ func createTemplate(content *EmailContent) (string, error) {
 	return buffer.String(), nil
 }
 
-func emailContent(report *transaction.Report) (*EmailContent, error) {
+func emailContent(report *transaction2.Report) (*EmailContent, error) {
 	var monthSummary []MonthSummary
 
 	averageTotalDebit, err := report.AverageTotalDebit()
