@@ -12,7 +12,7 @@ var (
 	AwsSecretAccessKey     = getOrFail("AWS_ACCESS_SECRET_KEY")
 	AwsCredentialToken     = getOrFail("AWS_CREDENTIAL_TOKEN")
 	AwsS3Bucket            = getOrFail("AWS_S3_BUCKET")
-	AwsFullPath            = getOrFail("AWS_FULL_PATH")
+	AwsS3Prefix            = getOrFail("AWS_S3_PREFIX")
 	ServiceEmail           = getOrFail("SERVICE_EMAIL")
 	CorsOrigin             = getOrFail("CORS_ORIGIN")
 )

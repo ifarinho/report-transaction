@@ -3,6 +3,7 @@ package transaction
 import (
 	"bytes"
 	"encoding/csv"
+	"fmt"
 	"report-transaction/internal/app/awsdk"
 	"report-transaction/internal/app/env"
 	"report-transaction/internal/app/tools/calculate"
@@ -40,9 +41,13 @@ func RowParser(record []string) (*Transaction, error) {
 }
 
 func GetFileFromBucket(key string) (*csv.Reader, error) {
-	content, err := awsdk.GetObject(env.AwsFullPath + key)
+	content, err := awsdk.GetObject(key)
 	if err != nil {
 		return nil, err
 	}
 	return csv.NewReader(bytes.NewBuffer(content)), nil
+}
+
+func FileFullPath(key string, accountId uint) string {
+	return fmt.Sprintf("%s/%s/%d/%s", env.AwsS3Bucket, env.AwsS3Prefix, accountId, key)
 }
