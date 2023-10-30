@@ -11,7 +11,7 @@
     <h2>Account Report</h2>
     <br>
     <div>
-        <h5>Summary</h5>
+        <h4>Summary</h4>
         <p>Total balance: {{ .TotalBalance }}</p>
         <p>Average debit amount: {{ .AverageTotalDebit }}</p>
         <p>Average credit amount: {{ .AverageTotalCredit }}</p>
@@ -19,7 +19,7 @@
     <br>
     {{ range .MonthSummary }}
         <div>
-            <h5>{{ .Month }}</h5>
+            <h4>{{ .Month }}</h4>
             <p>Average debit: {{ .AverageDebit }}</p>
             <p>Average credit: {{ .AverageCredit }}</p>
             <p>Number of transactions: {{ .Transactions }}</p>
