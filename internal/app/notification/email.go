@@ -34,7 +34,6 @@ func SendEmail(report *transaction.Report, account *transaction.Account) error {
 		return err
 	}
 
-	fmt.Println(report)
 	fmt.Println(templateContent)
 
 	body, err := createTemplate(templateContent)

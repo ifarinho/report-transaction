@@ -1,24 +1,14 @@
 package transaction
 
 import (
+	"fmt"
 	"github.com/shopspring/decimal"
 	"time"
 )
 
 type Report struct {
 	TotalBalance decimal.Decimal
-	MonthSummary map[time.Month]Movement
-}
-
-func (r *Report) AddMonthSummary(transaction Transaction) {
-	if movement, ok := r.MonthSummary[transaction.Month()]; ok {
-		movement.UpdateBalance(transaction.Amount)
-		return
-	}
-
-	movement := Movement{}
-	movement.UpdateBalance(transaction.Amount)
-	r.MonthSummary[transaction.Month()] = movement
+	MonthSummary map[time.Month]*Movement
 }
 
 func (r *Report) AddTotalBalance(amount decimal.Decimal) {
@@ -45,19 +35,26 @@ func (r *Report) AverageTotalCredit() (decimal.Decimal, error) {
 	return averageBalance(balance)
 }
 
-func NewReport() *Report {
-	return &Report{
-		TotalBalance: decimal.Decimal{},
-		MonthSummary: make(map[time.Month]Movement),
-	}
-}
-
 func CreateReport(transactions []Transaction) (*Report, error) {
-	report := NewReport()
+	report := &Report{}
+
+	monthSummary := make(map[time.Month]*Movement)
 
 	for _, transaction := range transactions {
-		report.AddTotalBalance(transaction.Amount)
-		report.AddMonthSummary(transaction)
+		if movement, ok := monthSummary[transaction.Month()]; ok {
+			movement.UpdateBalance(transaction.Amount)
+			continue
+		}
+
+		movement := &Movement{}
+		movement.UpdateBalance(transaction.Amount)
+		monthSummary[transaction.Month()] = movement
+	}
+
+	report.MonthSummary = monthSummary
+
+	for month, movement := range report.MonthSummary {
+		fmt.Printf("month: %v\n debit: %v\n credit: %v\n", month, movement.Debit, movement.Credit)
 	}
 
 	return report, nil
