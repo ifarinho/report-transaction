@@ -8,19 +8,23 @@
 </head>
 <body>
 <main>
-    <h2>Account Report Summary</h2>
+    <h2>Account Report</h2>
+    <br>
     <div>
+        <h5>Summary</h5>
         <p>Total balance: {{ .TotalBalance }}</p>
         <p>Average debit amount: {{ .AverageTotalDebit }}</p>
         <p>Average credit amount: {{ .AverageTotalCredit }}</p>
     </div>
+    <br>
     {{ range .MonthSummary }}
         <div>
-            <p>{{ .Month }}</p>
+            <h5>{{ .Month }}</h5>
             <p>Average debit: {{ .AverageDebit }}</p>
             <p>Average credit: {{ .AverageCredit }}</p>
             <p>Number of transactions: {{ .Transactions }}</p>
         </div>
+        <br>
     {{ end }}
 </main>
 </body>

@@ -1,7 +1,6 @@
 package event
 
 import (
-	"fmt"
 	"report-transaction/internal/app/args"
 	"report-transaction/internal/app/db"
 	"report-transaction/internal/app/file"
@@ -24,8 +23,6 @@ func handler(key string, accountId uint) error {
 	}
 
 	fullPath := transaction.FileFullPath(key, accountId)
-
-	fmt.Printf("fullPath: %v\n", fullPath)
 
 	fileContent, err := file.CsvReader(fullPath, transaction.GetFileFromBucket, transaction.RowParser)
 	if err != nil {
