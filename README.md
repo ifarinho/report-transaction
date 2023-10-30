@@ -35,6 +35,9 @@ An example summary email will contain:
 ### Execution flow
 ![Execution flow](./assets/execution_flow.png "Execution flow")
 
+### Database schema
+![Database schema](./assets/database_schema.png "Database schema")
+
 ## Quick start
 
 **1.** Clone the repository:
@@ -45,7 +48,7 @@ $ git clone git@github.com:ifarinho/report-transaction.git
 
 **2.** Build the image
 ```shell
-$ make build
+$ make build-image
 ```
 
 **3.** Done!

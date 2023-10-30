@@ -1,19 +1,23 @@
 #!/usr/bin/env make
 
-DOCKER_IMAGE=report-transaction
+PROJECT_NAME=report-transaction
 TEMPLATE_ENV=template.env
 
 .PHONY: help
 help:
-	@echo "Command list: \n- help: display this message \n- build: compiles the program and builds the image \n- dotenv: creates .env file for local use \n- local: runs the image with local .env \n- run: runs the program"
+	@echo "Command list: \n- help: display this message \n- build: compiles the program using go build \n- build-image: compiles the program and builds the image \n- dotenv: creates .env file for local use \n- local: runs the image with local .env \n- run: runs the program"
 
 .PHONY: build
 build:
-	@docker build -t $(DOCKER_IMAGE) .
+	@go build -o $(PROJECT_NAME) ./cmd/app/main.go
+
+.PHONY: build-image
+build-image:
+	@docker build -t $(PROJECT_NAME) .
 
 .PHONY: run
 run:
-	@docker run --rm -it $(DOCKER_IMAGE)
+	@docker run --rm -it $(PROJECT_NAME)
 
 .PHONY: dotenv
 dotenv:
