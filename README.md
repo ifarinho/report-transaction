@@ -88,14 +88,22 @@ more on that in the [configuration](#configuration-and-environmental-variables) 
 ### CLI
 
 The program must be run with two arguments:
-- `filename`: string. The CSV filename inside the S3 Bucket. Don't include the Bucket name or the prefix, these values
+- `--filename`: string. The CSV filename inside the S3 Bucket. Don't include the Bucket name or the prefix, these values
 are loaded via env.
-- `account`: uint. The account ID related to the file.
+- `--account`: uint. The account ID related to the file.
 
 ### Lambda
 
 The program is also ready to be deployed with AWS Lambda. For this particular case, you will need to set `RUN_MODE` to 
 `2` (Lambda) and allowed cors origin with `CORS_ORIGIN`. Program arguments are no longer needed and can be ignored.
+An example request is:
+
+```json
+{
+	"filename": "txns.csv",
+	"account_id": 69420
+}
+```
 
 ## Configuration
 
