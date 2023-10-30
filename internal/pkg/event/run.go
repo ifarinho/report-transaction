@@ -18,8 +18,10 @@ func Run() error {
 	}
 
 	if mode == cliMode {
-		Cli()
-	} else if mode == lambdaMode {
+		return Cli()
+	}
+
+	if mode == lambdaMode {
 		Lambda()
 	}
 
