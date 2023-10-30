@@ -8,7 +8,6 @@ import (
 	"report-transaction/internal/app/env"
 	"report-transaction/internal/app/tools/calculate"
 	"report-transaction/internal/app/tools/datetime"
-	"time"
 )
 
 const (
@@ -23,7 +22,7 @@ func RowParser(record []string) (*Transaction, error) {
 		return nil, err
 	}
 
-	date, err := time.Parse(time.DateOnly, record[dateRow])
+	date, err := datetime.ParseDateOnly(record[dateRow])
 	if err != nil {
 		return nil, err
 	}
