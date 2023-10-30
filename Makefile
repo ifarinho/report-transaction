@@ -23,6 +23,10 @@ run:
 dotenv:
 	@if [ ! -f $(CURDIR)/.env ]; then cp -f $(CURDIR)/$(TEMPLATE_ENV) $(CURDIR)/.env; fi
 
+.PHONY: csv
+csv:
+	@python3 scripts/generate_csv.py
+
 .PHONY: local
 local:
 	@$(shell ./scripts/run_local.sh $(FILENAME) $(ACCOUNT))

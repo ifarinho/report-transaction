@@ -5,6 +5,8 @@ Service in charge of generating and notifying user transaction reports.
 ## Content
 
 1. [Introduction](#introduction)
+   1. [Execution flow](#execution-flow)
+   2. [Database schema](#database-schema)
 2. [Quick start](#quick-start)
 3. [Local testing](#local-testing)
 4. [Program modes](#program-modes)
@@ -34,6 +36,7 @@ An example summary email will contain:
 
 ### Execution flow
 ![Execution flow](./assets/execution_flow.png "Execution flow")
+_This graph is not following any rules or convention, it's just a quick hint of the program execution flow._
 
 ### Database schema
 ![Database schema](./assets/database_schema.png "Database schema")
@@ -65,10 +68,10 @@ for hints.
 $ make dotenv
 ```
 
-Optionally, you can generate a CSV file with random values with a script in `scripts/` using Python. The file will be
-created at the root level of the project with the name `txns.csv`:
+Optionally, you can generate a CSV file with random values using Python. The file will be created at the root level of 
+the project with the name `txns.csv`:
 ```shell
-$ python scripts/generate_csv.py
+$ make csv
 ```
 
 **2.** Run the program locally. Example where `txns.csv` is the filename and `69420` is the account ID:
