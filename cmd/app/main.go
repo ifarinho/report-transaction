@@ -21,5 +21,7 @@ func main() {
 		log.Fatalf("fatal: %v", err)
 	}
 
-	event.Run()
+	if err := event.Run(); err != nil {
+		log.Fatalf("fatal: %v", err)
+	}
 }

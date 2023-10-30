@@ -2,7 +2,14 @@ package event
 
 import (
 	"fmt"
+	"os"
 	"report-transaction/internal/app/args"
+)
+
+const (
+	success int = iota
+	argumentError
+	handlerError
 )
 
 func Cli() {
@@ -10,19 +17,18 @@ func Cli() {
 	accountId := *args.AccountId
 
 	if err := validateArgument(bucketKey, "bucket-key"); err != nil {
-		fmt.Println(err.Error())
-		return
+		exit(argumentError, err)
 	}
 
 	if err := validateArgument(accountId, "account-id"); err != nil {
-		fmt.Println(err.Error())
-		return
+		exit(argumentError, err)
 	}
 
 	if err := handler(bucketKey, accountId); err != nil {
-		fmt.Println(err.Error())
-		return
+		exit(handlerError, err)
 	}
+
+	exit(success, nil)
 }
 
 func validateArgument[T comparable](argument T, description string) error {
@@ -30,4 +36,11 @@ func validateArgument[T comparable](argument T, description string) error {
 		return fmt.Errorf("argument error: got empty value for %s", description)
 	}
 	return nil
+}
+
+func exit(code int, err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	os.Exit(code)
 }
