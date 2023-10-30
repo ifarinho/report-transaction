@@ -16,7 +16,7 @@ const (
 	amountRow
 )
 
-func RowParser(record []string) (*Transaction, error) {
+func RowParser(record []string, accountId uint) (*Transaction, error) {
 	transactionId, err := calculate.ParseUint(record[transactionIdRow])
 	if err != nil {
 		return nil, err
@@ -34,6 +34,7 @@ func RowParser(record []string) (*Transaction, error) {
 
 	return &Transaction{
 		TransactionId: transactionId,
+		AccountId:     accountId,
 		Date:          datetime.TimeInUtc(date),
 		Amount:        amount,
 	}, nil

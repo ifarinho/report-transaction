@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-func CsvReader[T any](path string, getter func(string) (*csv.Reader, error), parser func([]string) (*T, error)) ([]T, error) {
+func CsvReader[T any](path string, id uint, getter func(string) (*csv.Reader, error), parser func([]string, uint) (*T, error)) ([]T, error) {
 	reader, err := getter(path)
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func CsvReader[T any](path string, getter func(string) (*csv.Reader, error), par
 			return nil, err
 		}
 
-		ts, err := parser(row)
+		ts, err := parser(row, id)
 		if err != nil {
 			return nil, err
 		}

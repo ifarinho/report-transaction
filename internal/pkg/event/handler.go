@@ -15,7 +15,7 @@ func handler(filename string, accountId uint) error {
 
 	fullPath := transaction.FileFullPath(filename, accountId)
 
-	fileContent, err := file.CsvReader(fullPath, transaction.GetFileFromBucket, transaction.RowParser)
+	fileContent, err := file.CsvReader(fullPath, accountId, transaction.GetFileFromBucket, transaction.RowParser)
 	if err != nil {
 		return err
 	}
