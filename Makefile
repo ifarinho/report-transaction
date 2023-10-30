@@ -7,13 +7,13 @@ TEMPLATE_ENV=template.env
 build:
 	@docker build -t report-transaction .
 
-.PHONY: env
-env:
+.PHONY: dotenv
+dotenv:
 	@if [ ! -f $(CURDIR)/.env ]; then cp -f $(CURDIR)/$(TEMPLATE_ENV) $(CURDIR)/.env; fi
 
 .PHONY: db
 db:
-	@docker run --name some-postgres \
+	@docker run --name dev-postgres \
  		-e POSTGRES_USER=postgres \
  		-e POSTGRES_PASSWORD=postgres \
  		-e POSTGRES_DB=postgres \
