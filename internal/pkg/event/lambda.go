@@ -10,7 +10,7 @@ import (
 )
 
 type Request struct {
-	BucketKey string `json:"bucket_key"`
+	Filename  string `json:"filename"`
 	AccountId uint   `json:"account_id"`
 }
 
@@ -24,7 +24,7 @@ func HandleRequest(_ context.Context, event events.APIGatewayProxyRequest) (even
 		return response(http.StatusBadRequest, err)
 	}
 
-	err = handler(request.BucketKey, request.AccountId)
+	err = handler(request.Filename, request.AccountId)
 	if err != nil {
 		return response(http.StatusInternalServerError, err)
 	}

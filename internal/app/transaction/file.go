@@ -47,6 +47,6 @@ func GetFileFromBucket(key string) (*csv.Reader, error) {
 	return csv.NewReader(bytes.NewBuffer(content)), nil
 }
 
-func FileFullPath(key string, accountId uint) string {
-	return fmt.Sprintf("%s/%d/%s", env.AwsS3Prefix, accountId, key)
+func FileFullPath(filename string, accountId uint) string {
+	return fmt.Sprintf("%s/%d/%s", env.AwsS3Prefix, accountId, filename)
 }

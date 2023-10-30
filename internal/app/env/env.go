@@ -6,24 +6,24 @@ import (
 )
 
 var (
-	RunMode                = getEnvOrFail("RUN_MODE")
-	PostgresDataSourceName = getEnvOrFail("DB_POSTGRES_DATA_SOURCE_NAME")
-	ServiceEmail           = getEnvOrFail("SERVICE_EMAIL")
-	AwsAccessKeyId         = getEnvOrFail("AWS_ACCESS_KEY_ID")
-	AwsSecretAccessKey     = getEnvOrFail("AWS_ACCESS_SECRET_KEY")
-	AwsRegion              = getEnvOrFail("AWS_REGION")
-	AwsS3Bucket            = getEnvOrFail("AWS_S3_BUCKET")
-	AwsS3Prefix            = getEnvOrFail("AWS_S3_PREFIX")
+	RunMode                = getEnvOrFatal("RUN_MODE")
+	PostgresDataSourceName = getEnvOrFatal("DB_POSTGRES_DATA_SOURCE_NAME")
+	ServiceEmail           = getEnvOrFatal("SERVICE_EMAIL")
+	AwsAccessKeyId         = getEnvOrFatal("AWS_ACCESS_KEY_ID")
+	AwsSecretAccessKey     = getEnvOrFatal("AWS_ACCESS_SECRET_KEY")
+	AwsRegion              = getEnvOrFatal("AWS_REGION")
+	AwsS3Bucket            = getEnvOrFatal("AWS_S3_BUCKET")
+	AwsS3Prefix            = getEnvOrFatal("AWS_S3_PREFIX")
 	AwsCredentialToken     = getEnv("AWS_CREDENTIAL_TOKEN")
 	CorsOrigin             = getEnv("CORS_ORIGIN")
 )
 
-func getEnvOrFail(key string) string {
-	v := getEnv(key)
-	if v == "" {
+func getEnvOrFatal(key string) string {
+	val, ok := os.LookupEnv(key)
+	if !ok || val == "" {
 		log.Fatalf("fatal: empty value for env variable: %v", key)
 	}
-	return v
+	return val
 }
 
 func getEnv(key string) string {

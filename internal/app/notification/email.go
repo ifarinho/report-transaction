@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	emailTemplatePath = "templates/email.gohtml"
+	emailTemplatePath = "web/templates/email.gohtml"
 	emailSubject      = "Account Report Summary"
 )
 

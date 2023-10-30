@@ -6,18 +6,18 @@ import (
 )
 
 func Cli() error {
-	bucketKey := *args.BucketKey
+	filename := *args.Filename
 	accountId := *args.AccountId
 
-	if err := validateArgument(bucketKey, "bucket-key"); err != nil {
+	if err := validateArgument(filename, "filename"); err != nil {
 		return err
 	}
 
-	if err := validateArgument(accountId, "account-id"); err != nil {
+	if err := validateArgument(accountId, "account"); err != nil {
 		return err
 	}
 
-	if err := handler(bucketKey, accountId); err != nil {
+	if err := handler(filename, accountId); err != nil {
 		return err
 	}
 

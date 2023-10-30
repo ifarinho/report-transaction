@@ -7,13 +7,13 @@ import (
 	"report-transaction/internal/app/transaction"
 )
 
-func handler(key string, accountId uint) error {
+func handler(filename string, accountId uint) error {
 	account, err := db.SelectById[transaction.Account](accountId)
 	if err != nil {
 		return err
 	}
 
-	fullPath := transaction.FileFullPath(key, accountId)
+	fullPath := transaction.FileFullPath(filename, accountId)
 
 	fileContent, err := file.CsvReader(fullPath, transaction.GetFileFromBucket, transaction.RowParser)
 	if err != nil {

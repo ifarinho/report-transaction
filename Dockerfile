@@ -16,4 +16,4 @@ FROM alpine as runtime
 
 COPY --from=build /app /goapp
 
-ENTRYPOINT ["/goapp/goapp"]
+ENTRYPOINT ["/goapp/goapp", "filename", "account"]
