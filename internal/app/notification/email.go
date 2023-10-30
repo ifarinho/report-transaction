@@ -28,12 +28,12 @@ type MonthSummary struct {
 }
 
 func SendEmail(report *transaction.Report, account *transaction.Account) error {
-	templateContent, err := emailContent(report)
+	emailContent, err := createEmailContent(report)
 	if err != nil {
 		return err
 	}
 
-	body, err := createTemplate(templateContent)
+	body, err := createTemplate(emailContent)
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func createTemplate(content *EmailContent) (string, error) {
 	return buffer.String(), nil
 }
 
-func emailContent(report *transaction.Report) (*EmailContent, error) {
+func createEmailContent(report *transaction.Report) (*EmailContent, error) {
 	var monthSummary []MonthSummary
 
 	averageTotalDebit, err := report.AverageTotalDebit()
