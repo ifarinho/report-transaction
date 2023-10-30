@@ -165,4 +165,3 @@ aims to prevent circular import errors and to be as simple as possible to organi
   - `scripts`: Collection of scripts used in the project.
   - `web`:
     - `templates`: HTML email template.
-<br>
