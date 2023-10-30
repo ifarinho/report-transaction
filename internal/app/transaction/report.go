@@ -1,7 +1,6 @@
 package transaction
 
 import (
-	"fmt"
 	"github.com/shopspring/decimal"
 	"time"
 )
@@ -52,10 +51,6 @@ func CreateReport(transactions []Transaction) (*Report, error) {
 	}
 
 	report.MonthSummary = monthSummary
-
-	for month, movement := range report.MonthSummary {
-		fmt.Printf("month: %v\n debit: %v\n credit: %v\n", month, movement.Debit, movement.Credit)
-	}
 
 	return report, nil
 }
