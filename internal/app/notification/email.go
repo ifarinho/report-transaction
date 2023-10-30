@@ -85,16 +85,16 @@ func emailContent(report *transaction.Report) (*EmailContent, error) {
 
 		monthSummary = append(monthSummary, MonthSummary{
 			Month:         month.String(),
-			AverageDebit:  averageMonthDebit.String(),
-			AverageCredit: averageMonthCredit.String(),
+			AverageDebit:  stringify.FixedDecimal(averageMonthDebit),
+			AverageCredit: stringify.FixedDecimal(averageMonthCredit),
 			Transactions:  stringify.Int64(movement.Transactions()),
 		})
 	}
 
 	return &EmailContent{
-		TotalBalance:       report.TotalBalance.String(),
-		AverageTotalDebit:  averageTotalDebit.String(),
-		AverageTotalCredit: averageTotalCredit.String(),
+		TotalBalance:       stringify.FixedDecimal(report.TotalBalance),
+		AverageTotalDebit:  stringify.FixedDecimal(averageTotalDebit),
+		AverageTotalCredit: stringify.FixedDecimal(averageTotalCredit),
 		MonthSummary:       monthSummary,
 	}, nil
 }

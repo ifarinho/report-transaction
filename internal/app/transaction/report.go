@@ -40,6 +40,8 @@ func CreateReport(transactions []Transaction) (*Report, error) {
 	monthSummary := make(map[time.Month]*Movement)
 
 	for _, transaction := range transactions {
+		report.AddTotalBalance(transaction.Amount)
+
 		if movement, ok := monthSummary[transaction.Month()]; ok {
 			movement.UpdateBalance(transaction.Amount)
 			continue
