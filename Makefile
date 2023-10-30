@@ -19,3 +19,7 @@ db:
  		-e POSTGRES_DB=postgres \
  		-p 5432:5432 \
  		-d postgres
+
+.PHONY: run
+run:
+	@docker run -it report-transaction
