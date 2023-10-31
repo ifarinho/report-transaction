@@ -9,7 +9,7 @@ help:
 
 .PHONY: build
 build:
-	@go build -o $(PROJECT_NAME) ./cmd/app/main.go
+	@GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o $(PROJECT_NAME) ./cmd/app/main.go
 
 .PHONY: build-image
 build-image:

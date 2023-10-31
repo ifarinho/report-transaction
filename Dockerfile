@@ -10,7 +10,7 @@ RUN go mod download && go mod verify
 
 COPY . ./
 
-RUN go build -o goapp ./cmd/app/
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o goapp ./cmd/app/
 
 FROM alpine as runtime
 
