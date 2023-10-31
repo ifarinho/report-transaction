@@ -114,7 +114,8 @@ are loaded via env.
 ### Lambda
 
 The program is also ready to be deployed with AWS Lambda. For this particular case, you will need to set `RUN_MODE` to 
-`2` (Lambda) and allowed cors origin with `CORS_ORIGIN`. Program arguments are no longer needed and can be ignored.
+`2` (Lambda) and set the allowed cors origin with `CORS_ORIGIN` to work with the API Gateway. Program arguments are no 
+longer needed and can be ignored.
 An example request is:
 
 ```json
