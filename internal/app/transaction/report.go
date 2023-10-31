@@ -5,9 +5,11 @@ import (
 	"time"
 )
 
+type MonthSummary map[time.Month]*Movement
+
 type Report struct {
 	TotalBalance decimal.Decimal
-	MonthSummary map[time.Month]*Movement
+	MonthSummary MonthSummary
 }
 
 func (r *Report) AddTotalBalance(amount decimal.Decimal) {
@@ -18,7 +20,8 @@ func (r *Report) AverageTotalDebit() (decimal.Decimal, error) {
 	balance := Balance{}
 
 	for _, movement := range r.MonthSummary {
-		balance.Update(movement.Debit.Value)
+		balance.Value = balance.Value.Add(movement.Debit.Value)
+		balance.Counter += movement.Debit.Counter
 	}
 
 	return averageBalance(balance)
@@ -28,7 +31,8 @@ func (r *Report) AverageTotalCredit() (decimal.Decimal, error) {
 	balance := Balance{}
 
 	for _, movement := range r.MonthSummary {
-		balance.Update(movement.Credit.Value)
+		balance.Value = balance.Value.Add(movement.Credit.Value)
+		balance.Counter += movement.Credit.Counter
 	}
 
 	return averageBalance(balance)
@@ -37,7 +41,7 @@ func (r *Report) AverageTotalCredit() (decimal.Decimal, error) {
 func CreateReport(transactions []Transaction) (*Report, error) {
 	report := &Report{}
 
-	monthSummary := make(map[time.Month]*Movement)
+	monthSummary := make(MonthSummary)
 
 	for _, transaction := range transactions {
 		report.AddTotalBalance(transaction.Amount)
