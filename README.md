@@ -118,6 +118,7 @@ specific run mode. A `template.env` file with reference values is provided.
 - `SERVICE_EMAIL`: Sender email address, this must be verified by AWS SES and the user must be in the right group with 
 permissions to use the service.
 - `CORS_ORIGIN`: Cors origin rules for the API Gateway. This value is not needed for the program to run in CLI mode.
+- `PROJECT_NAME`: The name of the project. Default is `report-transaction`.
 
 #### Amazon
 

@@ -26,4 +26,4 @@ docker run --rm \
   -e SERVICE_EMAIL="$SERVICE_EMAIL" \
   -e CORS_ORIGIN="$CORS_ORIGIN" \
   --network="host" \
-  "$DOCKER_IMAGE" --filename "$1" --account "$2"
+  "$PROJECT_NAME" --filename "$1" --account "$2"
