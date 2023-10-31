@@ -43,7 +43,7 @@ func response(statusCode int, err error) (events.APIGatewayProxyResponse, error)
 		StatusCode: statusCode,
 		Body:       body,
 		Headers: map[string]string{
-			"Content-Type":                     "application/json",
+			"Content-Type":                     "text/plain",
 			"Access-Control-Allow-Origin":      env.CorsOrigin,
 			"Access-Control-Allow-Headers":     "Content-Type",
 			"Access-Control-Allow-Methods":     "POST",
