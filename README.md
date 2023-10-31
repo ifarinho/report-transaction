@@ -9,6 +9,8 @@ Service in charge of generating and notifying user transaction reports.
    2. [Database schema](#database-schema)
 2. [Quick start](#quick-start)
 3. [Local testing](#local-testing)
+   1. [Program](#program)
+   2. [Database](#database)
 4. [Program modes](#program-modes)
 	1. [CLI](#cli)
 	2. [Lambda](#lambda)
@@ -63,6 +65,8 @@ $ make build-image
 For local testing the image you can run the program in CLI mode. Keep in mind that you will need valid AWS credentials
 and a proper user that have permissions to both S3 and SES. For the database, you could just use a Postgres image.
 
+### Program
+
 **1.** Generate a local `.env` file and set the corresponding values. Check the [configuration](#configuration) section
 for hints.
 
@@ -72,6 +76,7 @@ $ make dotenv
 
 Optionally, you can generate a CSV file with random values using Python. The file will be created at the root level of 
 the project with the name `txns.csv`, then upload this file to your S3 Bucket and set the correct env file values:
+
 ```shell
 $ make csv
 ```
@@ -79,8 +84,20 @@ $ make csv
 **2.** Run the program locally. Example where `txns.csv` is the filename and `69420` is the account ID:
 
 ```shell
-$ make local FILENAME=txns.csv ACCOUNT=69420
+$ make local FILENAME="txns.csv" ACCOUNT="69420"
 ```
+
+### Database
+
+To generate a testing database just build a default Postgres [image](https://hub.docker.com/_/postgres):
+
+**1.** Build image:
+
+```shell
+$ docker run --name dev-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -p 5432:5432 -d postgres
+```
+
+**2.** Source the database using the sample SQL files from the `storage/` directory.
 
 ## Program modes
 
@@ -180,5 +197,6 @@ aims to prevent circular import errors and to be as simple as possible to organi
     - `pkg`:
       - `event`: Main program execution process and run mode. Other modes should be added here.
   - `scripts`: Collection of scripts used in the project.
+  - `storage`: Example SQL files to source a testing database.
   - `web`:
     - `templates`: HTML email template.
