@@ -5,7 +5,7 @@ TEMPLATE_ENV=template.env
 
 .PHONY: help
 help:
-	@echo "Command list: \n- help: display this message \n- build: compiles the program using go build \n- build-image: compiles the program and builds the image \n- dotenv: creates .env file for local use \n- local: runs the image with local .env \n- csv: creates a random csv file \n- run: runs the program"
+	@echo "Command list: \n- help: display this message \n- build: compiles the program using go build \n- build-image: compiles the program and builds the image \n- dotenv: creates .env file for local use \n- csv: creates a random csv file \n- run: runs the program \n- local: runs the program with the generated .env file"
 
 .PHONY: build
 build:
@@ -29,4 +29,4 @@ csv:
 
 .PHONY: local
 local:
-	@$(shell ./scripts/run_local.sh $(FILENAME) $(ACCOUNT))
+	@./scripts/run_local.sh $(FILENAME) $(ACCOUNT)
