@@ -69,7 +69,7 @@ $ make dotenv
 ```
 
 Optionally, you can generate a CSV file with random values using Python. The file will be created at the root level of 
-the project with the name `txns.csv`:
+the project with the name `txns.csv`, then upload this file to your S3 Bucket and set the correct env file values:
 ```shell
 $ make csv
 ```
