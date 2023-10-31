@@ -6,12 +6,10 @@ import (
 	"report-transaction/internal/app/awsdk"
 	"report-transaction/internal/app/tools/stringify"
 	"report-transaction/internal/app/transaction"
+	"report-transaction/web/templates"
 )
 
-const (
-	emailTemplatePath = "web/templates/email.gohtml"
-	emailSubject      = "Account Report Summary"
-)
+const emailSubject = "Account Report Summary"
 
 type EmailContent struct {
 	TotalBalance       string
@@ -42,7 +40,7 @@ func SendEmail(report *transaction.Report, account *transaction.Account) error {
 }
 
 func createTemplate(content *EmailContent) (string, error) {
-	emailTemplate, err := template.ParseFiles(emailTemplatePath)
+	emailTemplate, err := template.New("").Parse(templates.Email)
 	if err != nil {
 		return "", err
 	}
