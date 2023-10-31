@@ -137,8 +137,8 @@ specific run mode. A `template.env` file with reference values is provided.
 - `ENV_RUN_MODE`: Set the program run mode.
   - `1`: CLI mode
   - `2`: Lambda mode
-- `ENV_SERVICE_EMAIL`: Sender email address, this must be verified by AWS SES and the user must be in the right group with 
-permissions to use the service.
+- `ENV_SERVICE_EMAIL`: Sender email address, this must be verified by AWS SES and the user must be in the right group 
+with permissions to use the service.
 - `ENV_CORS_ORIGIN`: Cors origin rules for the API Gateway. This value is not needed for the program to run in CLI mode.
 - `ENV_ALLOWED_METHODS`: Allowed origin methods for the API Gateway. Default only `POST`.
 - `ENV_PROJECT_NAME`: The name of the project. Default is `report-transaction`.
