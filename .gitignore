@@ -38,6 +38,3 @@ certs/*
 
 # Environment
 .env
-
-# Local
-txns.csv

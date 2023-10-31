@@ -1,8 +1,8 @@
 import csv
 import random
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
-output_file = "txns.csv"
+output_file = f"txns_{datetime.now().isoformat()}.csv"
 
 fields = ["Id", "Date", "Amount"]
 start_date = date(2023, 1, 1)
