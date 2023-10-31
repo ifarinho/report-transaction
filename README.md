@@ -36,10 +36,12 @@ An example summary email will contain:
 
 ### Execution flow
 ![Execution flow](./assets/execution_flow.png "Execution flow")
-_This graph is not following any rules or convention, it's just a quick hint of the program execution flow._
+_This graph is not following any rules or convention, it's just a quick hint of the program execution flow. Created
+using [Excalidraw](https://excalidraw.com/)._
 
 ### Database schema
 ![Database schema](./assets/database_schema.png "Database schema")
+_Created using [dbdiagram](https://dbdiagram.io/home)._
 
 ## Quick start
 
