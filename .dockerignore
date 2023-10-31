@@ -1,0 +1,13 @@
+.data/
+.cache/
+.idea/
+.vscode/
+build/
+vendor/
+.git*
+Dockerfile
+docker-compose.yml
+example*
+*.md
+*.csv
+.env
