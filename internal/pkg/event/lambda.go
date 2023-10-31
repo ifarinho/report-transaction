@@ -46,7 +46,7 @@ func response(statusCode int, err error) (events.APIGatewayProxyResponse, error)
 			"Content-Type":                     "text/plain",
 			"Access-Control-Allow-Origin":      env.CorsOrigin,
 			"Access-Control-Allow-Headers":     "Content-Type",
-			"Access-Control-Allow-Methods":     "POST",
+			"Access-Control-Allow-Methods":     env.AllowedMethods,
 			"Access-Control-Allow-Credentials": "true",
 		},
 	}, err

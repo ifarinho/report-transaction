@@ -21,9 +21,10 @@ Service in charge of generating and notifying user transaction reports.
 
 ## Introduction
 
-The aim of this project is to create a flexible program able to be run in any mode or deployed in any environment 
-needed. Currently, there is support to execute it as a CLI application or as a Lambda, but potentially, it can be 
-extended to support any other mode you want. <br>
+The aim of this project is to create a flexible program able to run in any mode or deployed in any environment needed. 
+Currently, there is support to execute it as a CLI application or as a [Lambda](https://aws.amazon.com/lambda/) with an 
+[API Gateway](https://aws.amazon.com/api-gateway/), but potentially, it can be extended to support any other mode you 
+want. <br>
 The program objective is to process a CSV file stored in Amazon [S3](https://aws.amazon.com/s3/) that contains a list of 
 credit and debit transactions of an account. It receives the filename and account ID and generates a report with 
 information extracted from the file. Once generated, an email will be sent to the account owner using Amazon 
@@ -43,7 +44,7 @@ using [Excalidraw](https://excalidraw.com/)._
 
 ### Database schema
 ![Database schema](./assets/database_schema.png "Database schema")
-_Created using [dbdiagram](https://dbdiagram.io/home)._
+_Where an Account has a one-to-many relationship with Transaction. Created using [dbdiagram](https://dbdiagram.io/home)._
 
 ## Quick start
 
@@ -97,7 +98,8 @@ To generate a testing database just build a default Postgres [image](https://hub
 $ docker run --name dev-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -p 5432:5432 -d postgres
 ```
 
-**2.** Source the database using the sample SQL files from the `storage/` directory.
+**2.** Source the database using the sample SQL files from the `storage/` directory. Don't forget to set a valid email 
+to test SES correctly.
 
 ## Program modes
 
@@ -114,9 +116,9 @@ are loaded via env.
 ### Lambda
 
 The program is also ready to be deployed with AWS Lambda. For this particular case, you will need to set 
-`ENV_RUN_MODE` to `2` (Lambda) and set the allowed cors origin with `ENV_CORS_ORIGIN` to work with the 
-[API Gateway](https://aws.amazon.com/api-gateway/). Program arguments are no longer needed and can be ignored.
-An example request is:
+`ENV_RUN_MODE` to `2` (Lambda) and set the allowed cors origin with `ENV_CORS_ORIGIN` to work with the API Gateway. 
+Program arguments are no longer needed and can be ignored.
+An example API Gateway request proxy event is:
 
 ```json
 {
@@ -138,6 +140,7 @@ specific run mode. A `template.env` file with reference values is provided.
 - `ENV_SERVICE_EMAIL`: Sender email address, this must be verified by AWS SES and the user must be in the right group with 
 permissions to use the service.
 - `ENV_CORS_ORIGIN`: Cors origin rules for the API Gateway. This value is not needed for the program to run in CLI mode.
+- `ENV_ALLOWED_METHODS`: Allowed origin methods for the API Gateway. Default only `POST`.
 - `ENV_PROJECT_NAME`: The name of the project. Default is `report-transaction`.
 
 #### Amazon
@@ -159,6 +162,7 @@ permissions to use the service.
 - `ENV_POSTGRES_SSL_MODE`: Enable/disable SSL mode.
 - `ENV_POSTGRES_TIME_ZONE`: Database timezone.
 - `ENV_POSTGRES_DATA_SOURCE_NAME`: Connection string generated from all the previous values.
+- `ENV_POSTGRES_BATCH_CREATE_SIZE`: Default create batch size.
 
 ## Dependencies
 
