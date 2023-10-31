@@ -114,7 +114,7 @@ are loaded via env.
 ### Lambda
 
 The program is also ready to be deployed with AWS Lambda. For this particular case, you will need to set 
-`RUN_MODE` to `2` (Lambda) and set the allowed cors origin with `CORS_ORIGIN` to work with the 
+`ENV_RUN_MODE` to `2` (Lambda) and set the allowed cors origin with `ENV_CORS_ORIGIN` to work with the 
 [API Gateway](https://aws.amazon.com/api-gateway/). Program arguments are no longer needed and can be ignored.
 An example request is:
 
@@ -132,33 +132,33 @@ specific run mode. A `template.env` file with reference values is provided.
 
 #### General
 
-- `RUN_MODE`: Set the program run mode.
+- `ENV_RUN_MODE`: Set the program run mode.
   - `1`: CLI mode
   - `2`: Lambda mode
-- `SERVICE_EMAIL`: Sender email address, this must be verified by AWS SES and the user must be in the right group with 
+- `ENV_SERVICE_EMAIL`: Sender email address, this must be verified by AWS SES and the user must be in the right group with 
 permissions to use the service.
-- `CORS_ORIGIN`: Cors origin rules for the API Gateway. This value is not needed for the program to run in CLI mode.
-- `PROJECT_NAME`: The name of the project. Default is `report-transaction`.
+- `ENV_CORS_ORIGIN`: Cors origin rules for the API Gateway. This value is not needed for the program to run in CLI mode.
+- `ENV_PROJECT_NAME`: The name of the project. Default is `report-transaction`.
 
 #### Amazon
 
-- `AWS_ACCESS_KEY_ID`: AWS access key ID.
-- `AWS_ACCESS_SECRET_KEY`: AWS access secret key.
-- `AWS_CREDENTIAL_TOKEN`: This variable is optional.
-- `AWS_REGION`: Region.
-- `AWS_S3_BUCKET`: Bucket name. Ex: `report-transaction`.
-- `AWS_S3_PREFIX`: File prefix. Ex: `account`. The full path would be `report-transaction/account/<id>/<file>`.
+- `ENV_AWS_ACCESS_KEY_ID`: AWS access key ID.
+- `ENV_AWS_ACCESS_SECRET_KEY`: AWS access secret key.
+- `ENV_AWS_CREDENTIAL_TOKEN`: This variable is optional.
+- `ENV_AWS_REGION`: Region.
+- `ENV_AWS_S3_BUCKET`: Bucket name. Ex: `report-transaction`.
+- `ENV_AWS_S3_PREFIX`: File prefix. Ex: `account`. The full path would be `report-transaction/account/<id>/<file>`.
 
 #### Postgres
 
-- `DB_POSTGRES_HOST`: Database host.
-- `DB_POSTGRES_USER`: Database user.
-- `DB_POSTGRES_PASSWORD`: User password.
-- `DB_POSTGRES_NAME`: Database name.
-- `DB_POSTGRES_PORT`: Database exposed port.
-- `DB_POSTGRES_SSL_MODE`: Enable/disable SSL mode.
-- `DB_POSTGRES_TIME_ZONE`: Database timezone.
-- `DB_POSTGRES_DATA_SOURCE_NAME`: Connection string generated from all the previous values.
+- `ENV_POSTGRES_HOST`: Database host.
+- `ENV_POSTGRES_USER`: Database user.
+- `ENV_POSTGRES_PASSWORD`: User password.
+- `ENV_POSTGRES_NAME`: Database name.
+- `ENV_POSTGRES_PORT`: Database exposed port.
+- `ENV_POSTGRES_SSL_MODE`: Enable/disable SSL mode.
+- `ENV_POSTGRES_TIME_ZONE`: Database timezone.
+- `ENV_POSTGRES_DATA_SOURCE_NAME`: Connection string generated from all the previous values.
 
 ## Dependencies
 
