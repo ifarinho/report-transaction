@@ -117,7 +117,7 @@ are loaded via env.
 
 The program is also ready to be deployed with AWS Lambda. For this particular case, you will need to set 
 `ENV_RUN_MODE` to `2` (Lambda) and set the allowed cors origin with `ENV_CORS_ORIGIN` to work with the API Gateway. 
-Program arguments are no longer needed and can be ignored.
+Program arguments are no longer needed and can be ignored. <br>
 An example API Gateway request proxy event is:
 
 ```json
