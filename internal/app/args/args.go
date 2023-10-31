@@ -6,7 +6,7 @@ import (
 
 var (
 	AccountId = flag.Uint("account", 0, "Account id")
-	Filename  = flag.String("filename", "", "S3 bucket object key")
+	Filename  = flag.String("filename", "", "S3 bucket filename")
 )
 
 func Parse() error {

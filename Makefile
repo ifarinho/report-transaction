@@ -5,7 +5,7 @@ TEMPLATE_ENV=template.env
 
 .PHONY: help
 help:
-	@echo "Command list: \n- help: display this message \n- build: compiles the program using go build \n- build-image: compiles the program and builds the image \n- dotenv: creates .env file for local use \n- local: runs the image with local .env \n- run: runs the program"
+	@echo "Command list: \n- help: display this message \n- build: compiles the program using go build \n- build-image: compiles the program and builds the image \n- dotenv: creates .env file for local use \n- local: runs the image with local .env \n- csv: creates a random csv file \n- run: runs the program"
 
 .PHONY: build
 build:
@@ -17,7 +17,7 @@ build-image:
 
 .PHONY: run
 run:
-	@docker run --rm -it $(PROJECT_NAME)
+	@docker run --rm -it $(PROJECT_NAME) $(FILENAME) $(ACCOUNT)
 
 .PHONY: dotenv
 dotenv:

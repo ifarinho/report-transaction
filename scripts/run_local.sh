@@ -7,7 +7,6 @@ else
   exit 1
 fi
 
-
 docker run --rm \
   -e RUN_MODE="$RUN_MODE" \
   -e DB_POSTGRES_HOST="$DB_POSTGRES_HOST" \
@@ -26,4 +25,5 @@ docker run --rm \
   -e AWS_S3_PREFIX="$AWS_S3_PREFIX" \
   -e SERVICE_EMAIL="$SERVICE_EMAIL" \
   -e CORS_ORIGIN="$CORS_ORIGIN" \
+  --network="host" \
   "$DOCKER_IMAGE" "$FILENAME" "$ACCOUNT"

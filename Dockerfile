@@ -16,4 +16,6 @@ FROM alpine as runtime
 
 COPY --from=build /app /goapp
 
-ENTRYPOINT ["/goapp/goapp", "filename", "account"]
+COPY scripts/docker_entrypoint.sh .
+
+ENTRYPOINT ["sh", "/docker_entrypoint.sh", "-filename", "-account"]
